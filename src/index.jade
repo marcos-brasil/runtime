@@ -1,0 +1,17 @@
+extends ./partials/base.jade
+
+block head
+  link(rel='stylesheet', href='./index.css')
+  link(rel='stylesheet', href='./mocha.css')
+  script(src='../shims.js')
+
+block body
+  #mocha
+  script(src='./mocha.js')
+  script(src='./chai.js')
+  script(src='./sinon-chai.js')
+  script(src='./sinon.js')
+
+  // build:js(dev) index.js
+  script(src='./index.js')
+  // endbuild

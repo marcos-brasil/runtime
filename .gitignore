@@ -1,0 +1,16 @@
+**/node_modules/**
+**/bower_components/**
+.sass-cache
+dist
+.tmp
+tmp
+dev
+.dev
+build
+.build
+commonjs
+.DS_Store
+*-bak
+bak
+npm-debug.log
+.npmignore

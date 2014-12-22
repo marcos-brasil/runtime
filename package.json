@@ -1,0 +1,33 @@
+{
+  "name": "runtime",
+  "version": "0.0.1",
+  "description": "flux runtime",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/markuz-brasil/runtime.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "di",
+    "c0",
+    "famous",
+    "ES6",
+    "generetors"
+  ],
+  "dependencies": {
+    "bootstrap": ">=3.2.0",
+    "c0": "git://github.com/markuz-brasil/c0",
+    "di": "git://github.com/markuz-brasil/di",
+    "famous": "git://github.com/markuz-brasil/famous",
+    "setimmediate": ">=1.0.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "seed": "git://github.com/markuz-brasil/seed"
+  },
+  "author": "markuz-brasil",
+  "license": "MIT"
+}
