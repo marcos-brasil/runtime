@@ -8,6 +8,7 @@ import promSpecs from './promises'
 import receSpecs from './receiver'
 import recuSpecs from './recursion'
 import thunSpecs from './thunks'
+import bugSpecs from './regression'
 
 describe('c0 generator utillity', () => {
   argSpecs()
@@ -19,4 +20,5 @@ describe('c0 generator utillity', () => {
   receSpecs()
   recuSpecs()
   thunSpecs()
+  bugSpecs()
 })

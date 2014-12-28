@@ -4,9 +4,46 @@
 
 #### Cavets
 
-[angular/di.js](https://github.com/angular/di.js) have an issue [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. But there is a work around documented on the issue report.
+- [angular/di.js](https://github.com/angular/di.js) have an issue [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. But there is a work around documented on the issue report.
 
-the runtime [specs minified](http://markuz-brasil.github.io/runtime/build/) and [specs minified](http://markuz-brasil.github.io/runtime/dev/)
+  the runtime [specs minified](http://markuz-brasil.github.io/runtime/build/) and [specs minified](http://markuz-brasil.github.io/runtime/dev/)
+
+- if a generator's logic is sync, c0 will behave sync (different from [co v3.1.0]()). The side effect is that if an error is throw within the body of the callback, this exception will be simply ignored tj/co#92 
+
+  The solution is to simply to wrap the callback in a setImmediate, and use `process.on('uncaughtException', function () {})`
+  
+  ```javascript
+
+    c0(function * gen () {
+      // do stuff
+    })(
+    setImmediate(
+      function (err) {
+       // gen is over
+      }
+    ))
+  ```
+
+  The down side of this approach, is that you can't really do this on the browser. But what it can be done is to patch the global setImmediate, 
+  here is a naive approach, which works with c0 only. 
+  
+
+  ```javascript
+      function fakeSetImmediate (fn) {
+        return (err) => {
+          setImmediate(() => {
+            try { fn(err) }
+            catch (e) {
+              done()
+            }
+          })
+        }
+
+      }
+
+  ```
+
+  Take a look at [angular/zone.js](https://github.com/angular/zone.js) for more robust patchers.
 
 #### Goal
 This repo's purpose is for testing libraries, framework (and their interaction) I intend to use on my personal projects. 

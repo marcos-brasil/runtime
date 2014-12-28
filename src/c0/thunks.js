@@ -287,6 +287,19 @@ export default function () {
           done()
         })
       })
+
+      it('should rethrow on a synchronous thunk', function(done){
+
+        c0(function *(){
+          yield function (_done) {
+            _done(new Error('boom'))
+          }
+        })(function(err){
+          expect(err.message).to.equal('boom')
+          done()
+        })
+
+      })
     })
   })
 }
