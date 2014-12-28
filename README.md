@@ -5,7 +5,7 @@
 #### Cavets
 [angular/di.js]() have a few issues angular/di.js#95 that fails on minified code. But there is a work around documented on the issue.
 
-the runtime [specs minified](http://markuz-brasil.github.io/runtime/build/) (minified) and [specs minified](http://markuz-brasil.github.io/runtime/dev/)
+the runtime [specs minified](http://markuz-brasil.github.io/runtime/build/) and [specs minified](http://markuz-brasil.github.io/runtime/dev/)
 
 #### Goal
 This repo's purpose is for testing libraries, framework (and their interaction) I intend to use on my personal projects. 
