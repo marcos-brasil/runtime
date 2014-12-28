@@ -17,36 +17,39 @@ function *work() {
   return calls;
 }
 
-describe('c0(fn)', function(){
-  describe('with a generator', function(){
-    it('should wrap with c0()', function(done){
-      c0(function *(){
-        var calls = yield work();
-        expect(calls).to.deep.equal(['one', 'two', 'three', 'four', 'five']);
+export default function () {
+  describe('c0(fn)', function(){
+    describe('with a generator', function(){
+      it('should wrap with c0()', function(done){
+        c0(function *(){
+          var calls = yield work();
+          expect(calls).to.deep.equal(['one', 'two', 'three', 'four', 'five']);
 
-        var a = work();
-        var b = work();
-        var c = work();
+          var a = work();
+          var b = work();
+          var c = work();
 
-        var calls = yield [a, b, c];
-        expect(calls).to.deep.equal([
-          [ 'one', 'two', 'three', 'four', 'five' ],
-          [ 'one', 'two', 'three', 'four', 'five' ],
-          [ 'one', 'two', 'three', 'four', 'five' ] ]);
+          var calls = yield [a, b, c];
+          expect(calls).to.deep.equal([
+            [ 'one', 'two', 'three', 'four', 'five' ],
+            [ 'one', 'two', 'three', 'four', 'five' ],
+            [ 'one', 'two', 'three', 'four', 'five' ] ]);
 
-      })(done);
-    })
+        })(done);
+      })
 
-    it('should catch errors', function(done){
-      c0(function *(){
-        yield (function *(){
-          throw new Error('boom');
-        }());
-      })(function(err){
-        assert(err);
-        assert(err.message === 'boom');
-        done();
-      });
+      it('should catch errors', function(done){
+        c0(function *(){
+          yield (function *(){
+            throw new Error('boom');
+          }());
+        })(function(err){
+          assert(err);
+          assert(err.message === 'boom');
+          done();
+        });
+      })
     })
   })
-})
+}
+

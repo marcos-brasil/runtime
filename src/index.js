@@ -8,6 +8,7 @@ console.log(readFileSync('./LICENSE', 'utf8'))
 mocha.setup('bdd')
 mocha.reporter('html')
 
+import './di'
 import './c0'
 
 mocha.run()

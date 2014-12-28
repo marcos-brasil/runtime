@@ -26,7 +26,7 @@ require('seed')(gulp, {
           if ('/tests/tests' === dir) {
             req.url = path.join('/tests', base)
           }
-          
+
           if ('shims.js' === base) {
             res.setHeader('Content-Type', 'application/javascript; charset=utf-8')
             res.end(fs.readFileSync(rootPath +'/6to5/browser-polyfill.js', 'utf8'))
@@ -91,7 +91,7 @@ require('seed')(gulp, {
   },
 })
 
-  
+
 
 
 

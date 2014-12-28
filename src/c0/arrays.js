@@ -9,28 +9,30 @@ function read (args) {
   })
 }
 
+export default function () {
+  describe('c0(* -> yield [])', function(){
+    it('should aggregate several thunks', function(done){
+      c0(function *(){
+        var a = read('00')
+        var b = read('01')
+        var c = read('02')
 
-describe('c0(* -> yield [])', function(){
-  it('should aggregate several thunks', function(done){
-    c0(function *(){
-      var a = read('00')
-      var b = read('01')
-      var c = read('02')
+        var res = yield [a, b, c]
 
-      var res = yield [a, b, c]
+        expect(res).to.have.length(3)
+        expect(res[0]).to.equal('00')
+        expect(res[1]).to.equal('01')
+        expect(res[2]).to.equal('02')
 
-      expect(res).to.have.length(3)
-      expect(res[0]).to.equal('00')
-      expect(res[1]).to.equal('01')
-      expect(res[2]).to.equal('02')
+      })(done)
+    })
 
-    })(done)
+    it('should noop with no args', function(done){
+      c0(function *(){
+        var res = yield []
+        expect(res).to.have.length(0)
+      })(done)
+    })
   })
+}
 
-  it('should noop with no args', function(done){
-    c0(function *(){
-      var res = yield []
-      expect(res).to.have.length(0)
-    })(done)
-  })
-})
