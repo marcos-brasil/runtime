@@ -40,7 +40,7 @@
 
   ```
 
-  Take a look at [angular/zone.js](https://github.com/angular/zone.js) for more robust patchers.
+  Botton line, error handling in JavaScript is hard, and is beyond the scope of this project to fix it. Take a look at [angular/zone.js](https://github.com/angular/zone.js) for more robust patchers.
 
 #### Goal
 This repo's purpose is for testing libraries, framework (and their interaction) I intend to use on my personal projects. 
