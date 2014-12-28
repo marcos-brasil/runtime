@@ -8,7 +8,7 @@
 
 - [angular/di.js](https://github.com/angular/di.js) have an issue [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. But there is a work around documented on the issue report.
 
-- if a generator's logic is sync, c0 will behave sync (different from [co v3.1.0]()). The side effect is that if an error is throw within the body of the callback, this exception will be simply ignored tj/co#92 
+- if a generator's logic is sync, c0 will behave sync (different from [co v3.1.0](https://github.com/tj/co/tree/3.1.0)). The side effect is that if an error is throw within the body of the callback, this exception will be simply ignored [tj/co#92 ](https://github.com/tj/co/issues/92)
 
   The solution is to simply to wrap the callback in a setImmediate, and use `process.on('uncaughtException', function () {})`
   
