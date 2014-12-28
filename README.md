@@ -4,9 +4,9 @@
 
 #### Cavets
 
-- [angular/di.js](https://github.com/angular/di.js) have an issue [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. But there is a work around documented on the issue report.
+- the runtime's [specs minified](http://markuz-brasil.github.io/runtime/build/) and [specs un-minified](http://markuz-brasil.github.io/runtime/dev/)
 
-  the runtime [specs minified](http://markuz-brasil.github.io/runtime/build/) and [specs minified](http://markuz-brasil.github.io/runtime/dev/)
+- [angular/di.js](https://github.com/angular/di.js) have an issue [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. But there is a work around documented on the issue report.
 
 - if a generator's logic is sync, c0 will behave sync (different from [co v3.1.0]()). The side effect is that if an error is throw within the body of the callback, this exception will be simply ignored tj/co#92 
 
@@ -16,12 +16,9 @@
 
     c0(function * gen () {
       // do stuff
-    })(
-    setImmediate(
-      function (err) {
-       // gen is over
-      }
-    ))
+    })(setImmediate(function (err) {
+      // gen has finished
+    }))
   ```
 
   The down side of this approach, is that you can't really do this on the browser. But what it can be done is to patch the global setImmediate, 
@@ -34,7 +31,7 @@
           setImmediate(() => {
             try { fn(err) }
             catch (e) {
-              done()
+              // handle error
             }
           })
         }
