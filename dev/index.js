@@ -1051,12 +1051,15 @@ function isUpperCase(char) {
 }
 
 
+
+
 function isClass(clsOrFunction) {
-  if (clsOrFunction.name) {
+  if (Object.keys(clsOrFunction.prototype).length > 0){
+    return true;
+  }else if (clsOrFunction.name) {
     return isUpperCase(clsOrFunction.name.charAt(0));
   }
-
-  return Object.keys(clsOrFunction.prototype).length > 0;
+  return false;
 }
 
 
@@ -1093,6 +1096,7 @@ exports.isFunction = isFunction;
 exports.isObject = isObject;
 exports.toString = toString;
 //# sourceMappingURL=maps/util.js.map
+
 },{}],8:[function(require,module,exports){
 // shim for using process in browser
 
@@ -1652,6 +1656,7 @@ var promSpecs = require('./promises')["default"];
 var receSpecs = require('./receiver')["default"];
 var recuSpecs = require('./recursion')["default"];
 var thunSpecs = require('./thunks')["default"];
+var bugSpecs = require('./regression')["default"];
 
 
 describe("c0 generator utillity", function () {
@@ -1664,9 +1669,10 @@ describe("c0 generator utillity", function () {
   receSpecs();
   recuSpecs();
   thunSpecs();
+  bugSpecs();
 });
 
-},{"./arguments":10,"./arrays":11,"./generator-functions":12,"./generators":13,"./objects":15,"./promises":16,"./receiver":17,"./recursion":18,"./thunks":19}],15:[function(require,module,exports){
+},{"./arguments":10,"./arrays":11,"./generator-functions":12,"./generators":13,"./objects":15,"./promises":16,"./receiver":17,"./recursion":18,"./regression":19,"./thunks":20}],15:[function(require,module,exports){
 "use strict";
 
 var c0 = require('c0');
@@ -1877,8 +1883,8 @@ exports["default"] = function () {
               case 3: _context3.next = 8;
                 break;
               case 5: _context3.prev = 5;
-                _context3.t36 = _context3["catch"](0);
-                error = _context3.t36;
+                _context3.t0 = _context3["catch"](0);
+                error = _context3.t0;
               case 8:
 
                 assert("boom" === error.message);
@@ -2214,6 +2220,46 @@ exports["default"] = function () {
 
 var c0 = require('c0');
 
+var expect = chai.expect;
+exports["default"] = function () {
+  describe("bugs", function () {
+    it("#92", function (done) {
+      function fakeSetImmediate(fn) {
+        return function (err) {
+          setImmediate(function () {
+            try {
+              fn(err);
+            } catch (e) {
+              expect(e.message).to.equal("boom");
+              done();
+            }
+          });
+        };
+      }
+
+      c0(regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (true) switch (_context.prev = _context.next) {
+            case 0: _context.next = 2;
+              return function (done) {
+                done(new Error("boom"));
+              };
+            case 2:
+            case "end": return _context.stop();
+          }
+        }, _callee, this);
+      }))(fakeSetImmediate(function (err) {
+        if (err) throw err;
+      }));
+    });
+  });
+};
+
+},{"c0":1}],20:[function(require,module,exports){
+"use strict";
+
+var c0 = require('c0');
+
 var assert = chai.assert;
 var expect = chai.expect;
 
@@ -2323,8 +2369,8 @@ exports["default"] = function () {
               case 3: _context5.next = 8;
                 break;
               case 5: _context5.prev = 5;
-                _context5.t37 = _context5["catch"](0);
-                expect(_context5.t37.message).to.equal("boom");
+                _context5.t1 = _context5["catch"](0);
+                expect(_context5.t1.message).to.equal("boom");
               case 8:
               case "end": return _context5.stop();
             }
@@ -2368,8 +2414,8 @@ exports["default"] = function () {
               case 3: _context7.next = 8;
                 break;
               case 5: _context7.prev = 5;
-                _context7.t38 = _context7["catch"](0);
-                error = _context7.t38;
+                _context7.t2 = _context7["catch"](0);
+                error = _context7.t2;
               case 8:
 
                 assert("boom" === error.message);
@@ -2498,14 +2544,14 @@ exports["default"] = function () {
               while (true) switch (_context12.prev = _context12.next) {
                 case 0: _context12.next = 2;
                   return get(1);
-                case 2: _context12.t39 = _context12.sent;
+                case 2: _context12.t3 = _context12.sent;
                   _context12.next = 5;
                   return get(2);
-                case 5: _context12.t40 = _context12.sent;
+                case 5: _context12.t4 = _context12.sent;
                   _context12.next = 8;
                   return get(3);
-                case 8: _context12.t41 = _context12.sent;
-                  return _context12.abrupt("return", [_context12.t39, _context12.t40, _context12.t41]);
+                case 8: _context12.t5 = _context12.sent;
+                  return _context12.abrupt("return", [_context12.t3, _context12.t4, _context12.t5]);
                 case 10:
                 case "end": return _context12.stop();
               }
@@ -2534,14 +2580,14 @@ exports["default"] = function () {
                       while (true) switch (_context13.prev = _context13.next) {
                         case 0: _context13.next = 2;
                           return get(4);
-                        case 2: _context13.t42 = _context13.sent;
+                        case 2: _context13.t6 = _context13.sent;
                           _context13.next = 5;
                           return get(5);
-                        case 5: _context13.t43 = _context13.sent;
+                        case 5: _context13.t7 = _context13.sent;
                           _context13.next = 8;
                           return get(6);
-                        case 8: _context13.t44 = _context13.sent;
-                          return _context13.abrupt("return", [_context13.t42, _context13.t43, _context13.t44]);
+                        case 8: _context13.t8 = _context13.sent;
+                          return _context13.abrupt("return", [_context13.t6, _context13.t7, _context13.t8]);
                         case 10:
                         case "end": return _context13.stop();
                       }
@@ -2550,14 +2596,14 @@ exports["default"] = function () {
                 case 2: other = _context14.sent;
                   _context14.next = 5;
                   return get(1);
-                case 5: _context14.t45 = _context14.sent;
+                case 5: _context14.t9 = _context14.sent;
                   _context14.next = 8;
                   return get(2);
-                case 8: _context14.t46 = _context14.sent;
+                case 8: _context14.t10 = _context14.sent;
                   _context14.next = 11;
                   return get(3);
-                case 11: _context14.t47 = _context14.sent;
-                  return _context14.abrupt("return", [_context14.t45, _context14.t46, _context14.t47].concat(other));
+                case 11: _context14.t11 = _context14.sent;
+                  return _context14.abrupt("return", [_context14.t9, _context14.t10, _context14.t11].concat(other));
                 case 13:
                 case "end": return _context14.stop();
               }
@@ -2589,16 +2635,16 @@ exports["default"] = function () {
               case 3: _context15.next = 8;
                 break;
               case 5: _context15.prev = 5;
-                _context15.t48 = _context15["catch"](0);
-                errors.push(_context15.t48.message);
+                _context15.t12 = _context15["catch"](0);
+                errors.push(_context15.t12.message);
               case 8: _context15.prev = 8;
                 _context15.next = 11;
                 return "something";
               case 11: _context15.next = 16;
                 break;
               case 13: _context15.prev = 13;
-                _context15.t49 = _context15["catch"](8);
-                errors.push(_context15.t49.message);
+                _context15.t13 = _context15["catch"](8);
+                errors.push(_context15.t13.message);
               case 16:
 
                 expect(errors).to.have.length(2);
@@ -2626,16 +2672,16 @@ exports["default"] = function () {
               case 3: _context16.next = 8;
                 break;
               case 5: _context16.prev = 5;
-                _context16.t50 = _context16["catch"](0);
-                errors.push(_context16.t50.message);
+                _context16.t14 = _context16["catch"](0);
+                errors.push(_context16.t14.message);
               case 8: _context16.prev = 8;
                 _context16.next = 11;
                 return get(1, new Error("bar"));
               case 11: _context16.next = 16;
                 break;
               case 13: _context16.prev = 13;
-                _context16.t51 = _context16["catch"](8);
-                errors.push(_context16.t51.message);
+                _context16.t15 = _context16["catch"](8);
+                errors.push(_context16.t15.message);
               case 16:
 
                 expect(errors).to.deep.equal(["foo", "bar"]);
@@ -2658,16 +2704,16 @@ exports["default"] = function () {
               case 3: _context17.next = 8;
                 break;
               case 5: _context17.prev = 5;
-                _context17.t52 = _context17["catch"](0);
-                errors.push(_context17.t52.message);
+                _context17.t16 = _context17["catch"](0);
+                errors.push(_context17.t16.message);
               case 8: _context17.prev = 8;
                 _context17.next = 11;
                 return get(1, null, new Error("bar"));
               case 11: _context17.next = 16;
                 break;
               case 13: _context17.prev = 13;
-                _context17.t53 = _context17["catch"](8);
-                errors.push(_context17.t53.message);
+                _context17.t17 = _context17["catch"](8);
+                errors.push(_context17.t17.message);
               case 16:
 
                 expect(errors).to.deep.equal(["foo", "bar"]);
@@ -2736,11 +2782,29 @@ exports["default"] = function () {
           done();
         });
       });
+
+      it("should rethrow on a synchronous thunk", function (done) {
+        c0(regeneratorRuntime.mark(function _callee21() {
+          return regeneratorRuntime.wrap(function _callee21$(_context21) {
+            while (true) switch (_context21.prev = _context21.next) {
+              case 0: _context21.next = 2;
+                return function (_done) {
+                  _done(new Error("boom"));
+                };
+              case 2:
+              case "end": return _context21.stop();
+            }
+          }, _callee21, this);
+        }))(function (err) {
+          expect(err.message).to.equal("boom");
+          done();
+        });
+      });
     });
   });
 };
 
-},{"c0":1}],20:[function(require,module,exports){
+},{"c0":1}],21:[function(require,module,exports){
 "use strict";
 
 var expect = chai.expect;
@@ -2892,7 +2956,7 @@ exports["default"] = function () {
   });
 };
 
-},{"di":3}],21:[function(require,module,exports){
+},{"di":3}],22:[function(require,module,exports){
 "use strict";
 
 var _extends = function (child, parent) {
@@ -3048,7 +3112,7 @@ exports["default"] = function () {
   });
 };
 
-},{"di":3}],22:[function(require,module,exports){
+},{"di":3}],23:[function(require,module,exports){
 "use strict";
 
 exports.createEngine = createEngine;
@@ -3091,7 +3155,7 @@ annotate(CyclicEngine, new Inject(Car));
 // @Provide(Engine)
 annotate(CyclicEngine, new Provide(Engine));
 
-},{"di":3}],23:[function(require,module,exports){
+},{"di":3}],24:[function(require,module,exports){
 "use strict";
 
 var annotate = require('di').annotate;
@@ -3123,7 +3187,7 @@ annotate(Kitchen, new Inject("Sink"));
 
 var house = exports.house = [House, Kitchen];
 
-},{"di":3}],24:[function(require,module,exports){
+},{"di":3}],25:[function(require,module,exports){
 "use strict";
 
 var annotate = require('di').annotate;
@@ -3143,7 +3207,7 @@ annotate(ShinyHouse, new Inject("Kitchen"));
 
 var house = exports.house = [ShinyHouse];
 
-},{"di":3}],25:[function(require,module,exports){
+},{"di":3}],26:[function(require,module,exports){
 "use strict";
 
 var annonSpec = require('./annotations')["default"];
@@ -3158,7 +3222,7 @@ describe("di Framework", function () {
   injSpec();
 });
 
-},{"./annotations":20,"./async":21,"./injector":26}],26:[function(require,module,exports){
+},{"./annotations":21,"./async":22,"./injector":27}],27:[function(require,module,exports){
 "use strict";
 
 var _extends = function (child, parent) {
@@ -3851,7 +3915,7 @@ exports["default"] = function () {
   });
 };
 
-},{"./fixtures/car":22,"./fixtures/house":23,"./fixtures/shiny_house":24,"di":3}],27:[function(require,module,exports){
+},{"./fixtures/car":23,"./fixtures/house":24,"./fixtures/shiny_house":25,"di":3}],28:[function(require,module,exports){
 "use strict";
 
 require('setimmediate');
@@ -3868,7 +3932,7 @@ require('./c0');
 
 mocha.run();
 
-},{"./c0":14,"./di":25,"setimmediate":9}]},{},[27])
+},{"./c0":14,"./di":26,"setimmediate":9}]},{},[28])
 
 
 //# sourceMappingURL=maps/index.js.map
