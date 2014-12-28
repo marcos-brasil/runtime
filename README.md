@@ -3,7 +3,8 @@
 |--- |--- |--- |--- |--- |--- |--- |--- |---
 
 #### Cavets
-[angular/di.js]() have a few issues angular/di.js#95 that fails on minified code. But there is a work around documented on the issue.
+
+[angular/di.js](https://github.com/angular/di.js) have a few issues [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. But there is a work around documented on the issue.
 
 the runtime [specs minified](http://markuz-brasil.github.io/runtime/build/) and [specs minified](http://markuz-brasil.github.io/runtime/dev/)
 
