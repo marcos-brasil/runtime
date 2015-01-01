@@ -3,10 +3,6 @@ import * as c0 from 'c0'
 
 var { expect } = chai
 
-
-
-
-
 export default function () {
 
   describe('bugs', function(){
@@ -31,7 +27,7 @@ export default function () {
           done(new Error('boom'))
         }
       })(fakeSetImmediate(function(err) {
-        if (err) throw err
+        if (err) { throw err }
       }))
     })
   })
