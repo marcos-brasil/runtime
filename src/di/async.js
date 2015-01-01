@@ -5,6 +5,7 @@ import {
   Inject,
   InjectPromise,
   ProvidePromise,
+  Type,
   TransientScope
 } from 'di'
 
@@ -19,13 +20,16 @@ function fetchUsers() {
   return Promise.resolve(new UserList())
 }
 
-class SynchronousUserList {}
+class SynchronousUserList {
+
+}
 
 class UserController {
   constructor(list) {
     this.list = list
   }
 }
+annotate(UserController, new Type())
 annotate(UserController, new Inject(UserList))
 
 class SmartUserController {
@@ -33,6 +37,7 @@ class SmartUserController {
     this.promise = promise
   }
 }
+annotate(SmartUserController, new Type())
 annotate(SmartUserController, new InjectPromise(UserList))
 
 export default function () {
@@ -111,6 +116,7 @@ export default function () {
           this.list = list
         }
       }
+      annotate(NeverCachedUserController, new Type())
       annotate(NeverCachedUserController, new TransientScope())
       annotate(NeverCachedUserController, new Inject(UserList))
 

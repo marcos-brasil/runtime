@@ -6,7 +6,24 @@
 
 - the runtime's [specs minified](http://markuz-brasil.github.io/runtime/build/) and [specs un-minified](http://markuz-brasil.github.io/runtime/dev/)
 
-- [angular/di.js](https://github.com/angular/di.js) have an issue [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. But there is a work around documented on the issue report.
+- [angular/di.js](https://github.com/angular/di.js) have an issue [angular/di.js#95](https://github.com/angular/di.js/issues/95) that fails on minified code. ~But there is a work around documented on the issue report.~
+
+  Found out where the issue is. Uglify converts `var Foo = function Foo () {}` into `var Foo = function () {}`. Therefore, Foo.name is undefined and the di framework doesn't detect that given function is a class
+  another work around is:
+
+  ```javascript
+  // instead of
+  class Foo {}
+
+  // do
+  class Foo {
+    get name () {
+      return 'Foo'
+    }
+  }
+
+  ```
+  and improve class detection by `isClass` function from `src/util.js`
 
 - if a generator's logic is sync, c0 will behave sync (different from [co v3.1.0](https://github.com/tj/co/tree/3.1.0)). The side effect is that if an error is throw within the body of the callback, this exception will be simply ignored [tj/co#92 ](https://github.com/tj/co/issues/92)
 

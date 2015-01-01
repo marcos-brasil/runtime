@@ -77,6 +77,26 @@ require('seed')(gulp, {
     //       will present a certificate warning in the browser.
     // https: true,
   },
+  es6: {
+    src: [
+      './src/**/*.{js,jsx,es6,ajs}',
+      './node_modules/di/commonjs/**/*.{js,jsx,es6,ajs}',
+    ],
+    commonjs: {
+      dest: './commonjs'
+    },
+    browserify: {
+      // standalone: 'APP',
+      entries: [
+        './src/index.js',
+        './src/scripts/init.js',
+        './src/tests/index.js',
+      ],
+      sourcemaps: true,
+      dest: './dev',
+      aliases: {},
+    },
+  },
   less: {
     src: [
       './src/**/*.less',
