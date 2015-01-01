@@ -80,7 +80,7 @@ require('seed')(gulp, {
   es6: {
     src: [
       './src/**/*.{js,jsx,es6,ajs}',
-      './node_modules/di/commonjs/**/*.{js,jsx,es6,ajs}',
+      // './node_modules/di/commonjs/**/*.{js,jsx,es6,ajs}',
     ],
     commonjs: {
       dest: './commonjs'
